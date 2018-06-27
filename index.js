@@ -32,6 +32,13 @@ app.get('/projects',  async (req, res) => {
     res.send(response);
 });
 
+app.get('/project', async (req, res) => {
+    const project_id = req.param('project_id');
+
+    const projectSnapshot = await firebaseDb.ref(`projects/${project_id}`).once('value');
+    res.send(projectSnapshot.val());
+});
+
 app.post('/projects', (req, res) => {
     const { project } = req.body;
     
