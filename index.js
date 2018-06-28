@@ -1,24 +1,25 @@
 const admin = require('firebase-admin');
 const express = require('express');
-var bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
+const appConfig = require('./config/config');
+
 
 // -- CONFIG --
-const serviceAccount = require("./accountKey.json");
+const serviceAccount = require("./config/accountKey.json");
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    databaseURL: "https://reactauth-e500b.firebaseio.com"
+    databaseURL: appConfig.databaseURL
 });
 
 const firebaseDb = admin.database();
 
 const app = express();
-const port = 8000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }))
-app.listen(port, () => {
-    console.log('We are live on ' + port);
+app.listen(appConfig.PORT, () => {
+    console.log('We are live on ' + appConfig.PORT);
 });
 
 // -- END CONFIG --
@@ -45,5 +46,7 @@ app.post('/projects', (req, res) => {
     firebaseDb.ref('projects').push(JSON.parse(project));
     res.sendStatus(201);
 });
+
+// app.put('/');
 
 // -- End flow -- 
