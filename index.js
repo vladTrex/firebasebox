@@ -19,7 +19,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }))
 app.listen(appConfig.PORT, () => {
-    console.log('We are live on ' + appConfig.PORT);
+    console.log(`We are live on  + ${appConfig.PORT}`);
 });
 
 // -- END CONFIG --
